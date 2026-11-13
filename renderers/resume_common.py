@@ -897,7 +897,7 @@ def render_education_rl(ctx):
         # Degree (bold) on the first line, university (italic) below it.
         left_para   = Paragraph(f"<b>{degree}</b><br/><i>{univ}</i>", ctx.styles['edu'])
         right_para  = Paragraph(completion, ctx.styles['date'])
-        edu_table   = Table([[left_para, right_para]], colWidths=[400, 137])
+        edu_table   = Table([[left_para, right_para]], colWidths=[340, 197])
         edu_table.setStyle(TableStyle([
             ('VALIGN',        (0,0), (-1,-1), 'TOP'),
             ('LEFTPADDING',   (0,0), (-1,-1), 0),

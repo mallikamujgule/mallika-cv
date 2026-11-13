@@ -109,6 +109,19 @@ compile_resume() {
         fi
     fi
 
+    # One page only: every resume must fit a single A4 page.
+    local pages
+    pages=$("$VENV_PYTHON" -c "
+import sys
+from pypdf import PdfReader
+print(len(PdfReader(sys.argv[1]).pages))
+" "$RESUME_PDF" 2>/dev/null || echo "?")
+    if [[ "$pages" != "1" ]]; then
+        COMPILE_ERROR="resume is $pages pages, it must be exactly 1 page"
+        COMPILE_LOG="Trim Resume.yaml: drop the lowest-ranked project or a skills row, shorten bullets, or remove the weakest bullet of an older role. Then re-run the resume command."
+        set -e; return 1
+    fi
+
     # Step D: Parseability audit
     "$VENV_PYTHON" "$SCRIPT_DIR/resume_parseability.py" "$RESUME_PDF" "Resume.yaml" > $LOG_DIR/parse.log 2>&1
     if [[ $? -ne 0 ]]; then

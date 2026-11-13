@@ -62,6 +62,9 @@ block in `ATS_Report.yaml`. The bash script compiles and audits the PDF.
   5. `./run_pipeline.sh resume` runs `check_resume_facts.py`: it fails on any
      number that is not in `okf/` and lists bullets without a number.
 - **Education, languages:** from the base resume exactly.
+- **One page, always.** `./run_pipeline.sh resume` fails (exit 3) when the PDF is not exactly
+  1 page. If it spills, drop the lowest-ranked project or a skills row, shorten bullets, or drop
+  the weakest bullet of an older role, then re-run.
 - **Layout fit:** the result must fill one A4 page. Add skill rows or a further
   catalog project if the page is short; trim if it spills. Never pad prose.
 - **Language:** `English` or `German`, as Mallika chose; set `language` accordingly.
