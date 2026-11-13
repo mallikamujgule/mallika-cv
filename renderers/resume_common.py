@@ -426,7 +426,7 @@ def generate_latex_experience_tex(data, h, include_project_bullets=False):
     for i, exp in enumerate(exp_list):
         company    = escape_latex(exp.get('company', ''))
         date       = escape_latex(format_date_numeric(exp.get('date', '')))
-        title      = escape_latex(exp.get('title', ''))
+        title      = escape_latex(', '.join(x for x in (exp.get('title', ''), exp.get('location', '')) if x))
         bullets    = [escape_latex(b) for b in exp.get('bullets', [])]
 
         # Project-style bullets (name --- [Case Study] --- summary format)
@@ -838,7 +838,7 @@ def render_professional_experience_rl(ctx):
             block.append(Spacer(1, 4))
         company    = exp.get('company', '')
         date_range = format_date_numeric(exp.get('date', ''))
-        job_title  = exp.get('title', '')
+        job_title  = ', '.join(x for x in (exp.get('title', ''), exp.get('location', '')) if x)
         bullets    = exp.get('bullets', [])
 
         row1_left  = Paragraph(f"<b>{company}</b>", ctx.styles['comp'])
