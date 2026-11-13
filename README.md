@@ -53,8 +53,8 @@ Education, Skills, Languages).
 | `profile.yaml` | Name, contact, photo, signature, output file prefix. Change details here, not in code. |
 | `project_catalog.yaml` | The only source of projects and metrics. Edit, then regenerate the condensed copy (see `SKILL.md`). |
 | `project_catalog_condensed.yaml` | Generated, no bullets, used for ranking. |
-| `base_files/english/resume.md` | Base resume text. |
-| `templates/` | Example `Resume.yaml` files for both types. |
+| `base_files/english/resume.md`, `base_files/german/resume_de.md` | Base resume text in English and German. |
+| `templates/` | Example `Resume.yaml` files for both types in English and German, and English and German cover letter templates. |
 | `skill_mappings.yaml`, `project_mappings.yaml` | Name normalization for Obsidian sync. |
 
 ## Where files go
@@ -66,6 +66,6 @@ Education, Skills, Languages).
 
 ## Known limits
 
-- English only until a German base resume is added to `okf/base_files/german/`.
+- German text is machine-translated from your CV; have a native speaker proofread it, since your German is A2.
 - The AI-watermark check reports marks; it does not prove how text was written.
   Follow the disclosure rules of employers and schools.

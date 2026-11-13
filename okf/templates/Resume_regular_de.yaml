@@ -1,0 +1,113 @@
+# German regular resume template (language: German). Facts come from Mallika_Mujgule_CV.pdf.
+# Have a native speaker proofread before sending; the translation is machine-written.
+type: resume
+language: German
+render_mode: reportfallback
+resume_style: us
+resume_variation: Balanced
+keyword_stuffing: false
+user_directed_skills: []
+contact_info:
+  name: MALLIKA MUJGULE
+  location: Berlin, Deutschland
+  phone: +49 172 7689957
+  email: mallikamujgule08@gmail.com
+  linkedin: linkedin.com/in/mallika-mujgule-1114bb13a
+  portfolio: mallikamujgule.vercel.app
+  photo: null
+summary: Über 4 Jahre Erfahrung im Product Design für komplexe B2B-, Fintech- und IoT-Produkte, von der Recherche bis zur Umsetzung mit PMs und Entwicklern.
+technical_skills:
+- category: Design-Praxis
+  skills:
+  - Interaction Design
+  - Wireframing
+  - Prototyping
+  - Design Systems
+  - Responsive Design
+  - Mobile-App-Design
+- category: Research & Evidenz
+  skills:
+  - User Research
+  - Usability-Tests
+  - A/B-Tests
+  - Heuristische Evaluation
+  - Journey Mapping
+  - Informationsarchitektur
+- category: Tools & KI-Workflows
+  skills:
+  - Figma
+  - Claude Code
+  - Lovable
+  - Google AI Studio
+  - Framer
+  - Miro
+  - Zeplin
+- category: Zusammenarbeit
+  skills:
+  - Funktionsübergreifende Zusammenarbeit
+  - Stakeholder-Management
+  - Systemdenken
+  - Agile Zusammenarbeit
+  - Designstrategie
+projects:
+- name: FYTA Plant App and Sensor Flows
+  repo_url: https://mallikamujgule.vercel.app/
+  tools:
+  - Figma
+  - Claude Code
+  - Prototyping
+  bullets:
+  - 20+ Screens und End-to-End-Flows für die FYTA-App entworfen
+  - Plant-Journal-, Kalibrierungs- und Probe-Test-Flows gestaltet
+  - 2- bis 3-mal schneller von Konzept zu Build mit Claude
+- name: Thermax EDGE B2B Asset Tracking Redesign
+  repo_url: https://mallikamujgule.vercel.app/
+  tools:
+  - Figma
+  - Double Diamond
+  - Usability-Tests
+  bullets:
+  - 12+ Usability-Probleme in Tests mit 6+ Industrienutzern gefunden
+  - 10+ Screens neu gestaltet, prognostiziert 25 % kürzere Nutzerwege
+  - 'Eine Asset-Seite: prognostiziert 30 % weniger Statusanrufe'
+professional_experience:
+- company: FYTA
+  location: Berlin, Deutschland
+  date: 01/2026 - heute
+  title: Werkstudent UX Designer
+  bullets:
+  - 20+ Screens und End-to-End-Flows für die FYTA-App entworfen, von User Research bis Prototyp
+  - Sensordaten-Analysetool für das FYTA-Backend mit KI-gestützter Entwicklung gebaut
+- company: 'Onething Design (Kunde: Thermax EDGE)'
+  location: Pune, Indien
+  date: 01/2025 - 08/2025
+  title: Senior Product Designer
+  bullets:
+  - 'UX-Audit geleitet: 12+ Usability-Probleme in Tests mit 6+ Industrienutzern gefunden'
+  - Product Manager, Entwickler und Stakeholder auf Business- und Nutzerziele ausgerichtet
+- company: 'Sparklin (Kunde: ICICI Bank)'
+  location: Pune, Indien
+  date: 06/2022 - 10/2024
+  title: UX Designer
+  bullets:
+  - Jede Designrunde dem Kunden präsentiert und Freigabe erreicht
+  - 3 Design-Praktikanten betreut und 10+ UX-Praktikumskandidaten interviewt
+- company: Shashi Prabhu and Associates
+  location: Pune, Indien
+  date: 02/2021 - 05/2022
+  title: Architect
+  bullets:
+  - 15+ Projekte termingerecht geliefert; 3D-Präsentationen trugen zu 20 % höherer Kundenbindung bei
+education:
+- degree: M.A. Innovation Design Management
+  university: University of Europe for Applied Sciences, Berlin
+  date: 09/2025 - 02/2027 (voraussichtlich)
+- degree: Bachelor of Architecture
+  university: Dr. Bhanuben Nanavati College of Architecture, Pune
+  date: 04/2020
+languages:
+- Englisch (C2)
+- Deutsch (A2)
+- Französisch (A1)
+- Hindi (C2)
+- Marathi (C2)

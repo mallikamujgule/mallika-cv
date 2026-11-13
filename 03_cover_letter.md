@@ -9,8 +9,13 @@ and checks the PDF.
 `Job_Description.yaml`, `project_info.md`, `okf/profile.yaml`.
 
 ## Rules
-- Match the job's language. English: at most 4 paragraphs, 250 to 320 words,
-  one A4 page.
+- Match the job's language (use `okf/templates/Cover_Letter_en.yaml` or
+  `Cover_Letter_de.yaml` as the starting point). English: at most 4 paragraphs,
+  250 to 320 words, one A4 page. German: at most 4 paragraphs, 180 to 240 words,
+  real umlauts and ß, salutation `Sehr geehrte Damen und Herren,` (or the named
+  contact), closing `Mit freundlichen Grüßen` without a comma, date `Berlin, TT.MM.JJJJ`,
+  subject `Bewerbung als [Stellentitel]`. Tell Mallika her German is A2, so a native
+  speaker should proofread before sending.
 - Layout: sender, recipient, date, subject, salutation, body, closing
   (standard German business letter layout, also used for English).
 - `recipient.company` and the subject's job title come from

@@ -1,0 +1,24 @@
+# English cover letter template. Replace the [bracketed] parts per job.
+# 4 paragraphs, 250 to 320 words, one A4 page. Numbers only from okf/project_catalog.yaml.
+type: cover_letter
+render_mode: "latex"          # latex | reportfallback
+language: "English"
+sender:
+  name: "Mallika Mujgule"
+  address: "Berlin, Germany"
+  phone: "+49 172 7689957"
+  email: "mallikamujgule08@gmail.com"
+recipient:
+  company: "[Company]"
+  department: "Hiring Team"
+  address: "[Address from the job posting, or company name and city]"
+date: "Berlin, [DD.MM.YYYY]"
+subject: "Application for [Job title]"
+salutation: "Dear Hiring Team,"
+paragraphs:
+  - "[P1: tie one concrete requirement from the job to one piece of your work; say what you would do in the first 90 days]"
+  - "[P2: deep dive into the best-matching project: method, decision, result with its real number]"
+  - "[P3: a second project from a different angle: research, systems, leadership or AI-assisted prototyping]"
+  - "[P4: why this company, availability, portfolio at mallikamujgule.vercel.app]"
+closing: "Sincerely,"
+signature_image: ""

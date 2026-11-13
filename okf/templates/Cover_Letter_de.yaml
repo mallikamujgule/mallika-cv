@@ -1,0 +1,25 @@
+# Deutsche Anschreiben-Vorlage (language: German). Die [Platzhalter] pro Stelle ersetzen.
+# 4 Absätze, 180 bis 240 Wörter, eine A4-Seite. Echte Umlaute, "Mit freundlichen Grüßen" ohne Komma.
+# Zahlen nur aus okf/project_catalog.yaml. Bitte vor dem Versand von einer Person mit Deutsch auf Muttersprachniveau prüfen lassen.
+type: cover_letter
+render_mode: "latex"          # latex | reportfallback
+language: "German"
+sender:
+  name: "Mallika Mujgule"
+  address: "Berlin, Deutschland"
+  phone: "+49 172 7689957"
+  email: "mallikamujgule08@gmail.com"
+recipient:
+  company: "[Unternehmen]"
+  department: "Personalabteilung"
+  address: "[Adresse aus der Stellenanzeige, sonst Unternehmen und Stadt]"
+date: "Berlin, [TT.MM.JJJJ]"
+subject: "Bewerbung als [Stellentitel]"
+salutation: "Sehr geehrte Damen und Herren,"
+paragraphs:
+  - "[A1: eine konkrete Anforderung der Stelle mit einem Projekt verbinden; sagen, was in den ersten 90 Tagen geplant ist]"
+  - "[A2: Projekt mit der besten Passung vertiefen: Methode, Entscheidung, Ergebnis mit echter Zahl]"
+  - "[A3: zweites Projekt aus anderem Blickwinkel: Research, Systeme, Führung oder KI-gestütztes Prototyping]"
+  - "[A4: warum dieses Unternehmen, Verfügbarkeit, Portfolio unter mallikamujgule.vercel.app; Deutsch A2, im Lernprozess]"
+closing: "Mit freundlichen Grüßen"
+signature_image: ""

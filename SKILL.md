@@ -53,12 +53,13 @@ cd ~/.claude/skills/mallika-cv
 ### Step 0: get the job description
 
 - Pasted text or a file path: use it.
-- A URL: open it with the built-in browser or WebFetch and copy the posting text
-  (title, company, location, requirements, responsibilities, stack). Skip
-  cookie banners and navigation. If that fails, run
-  `./run_pipeline.sh fetch --url "<URL>"` (Jina reader, prints `JD_FILE:`).
-  If that also fails, ask Mallika to paste the posting. Never use a login page,
-  an error page or a different posting.
+- A URL: run `./run_pipeline.sh fetch --url "<URL>"`. It uses TinyFish when the
+  `tinyfish` CLI is installed (`./run_pipeline.sh doctor` shows this), otherwise
+  the Jina reader, and prints `JD_FILE:`. Read that file. If both fail, open the
+  URL with the built-in browser or WebFetch and copy the posting text (title,
+  company, location, requirements, responsibilities, stack), skipping cookie
+  banners and navigation. If that also fails, ask Mallika to paste the posting.
+  Never use a login page, an error page or a different posting.
 
 Save the clean text to a scratch file and keep the `source_url`.
 
@@ -69,9 +70,10 @@ Save the clean text to a scratch file and keep the `source_url`.
 | 1 | Resume type | `LaTeX` (photo, dense one page) or `Regular` (clean ReportLab PDF) |
 | 2 | Layout | `Standard` (Summary, Skills, Projects, Experience, Education, Languages) or `Experience-led` (Summary, Experience with projects folded in, Education, Skills, Languages) |
 | 3 | Application source | `Cold Apply`, `Referral`, `LinkedIn Connection`, `Direct` (ask for the contact name and role if Referral or LinkedIn Connection) |
-| 4 | Language | `English` (German is only available once a German base resume exists in `okf/base_files/german/`) |
+| 4 | Language | `English` or `German` (German uses `okf/base_files/german/resume_de.md`; the cover letter and resume are written in German) |
 
-Mapping to files: `LaTeX` sets `render_mode: latex`, `Regular` sets
+Mapping to files: `German` sets `language: German` in every YAML (output names become
+`..._Lebenslauf.pdf` and `..._Anschreiben.pdf`). `LaTeX` sets `render_mode: latex`, `Regular` sets
 `render_mode: reportfallback`. `Standard` sets `resume_style: us`,
 `Experience-led` sets `resume_style: german`. If `./run_pipeline.sh doctor`
 reports no `pdflatex`, tell Mallika LaTeX will fall back to the Regular
@@ -97,10 +99,13 @@ renderer and continue.
 
 ### Step 2: resume
 
-Read `02_resume_and_visual_audit.md`, write `Resume.yaml`, then run
+Read `02_resume_and_visual_audit.md`, write `Resume.yaml` (experience bullets rewritten
+for this job in the JD's wording, each with a real number from her sources where
+one exists), then run
 `./run_pipeline.sh resume --app-dir "<APP_DIR>"`. Exit code 3 prints the error
-and a `FIX:` line: edit `Resume.yaml` accordingly and run the same command
-again, at most twice. Then add `post_rewrite_ats_score` to `ATS_Report.yaml`.
+(a compile problem, or a number that is not in her sources) and a `FIX:` line: edit `Resume.yaml` accordingly and run the same command
+again, at most twice. Then add `post_rewrite_ats_score` to `ATS_Report.yaml`. The run lists bullets that
+have no number: tell Mallika and ask for a real figure, never invent one.
 
 ### Step 3: cover letter
 
@@ -133,4 +138,7 @@ Re-read this file, `okf/profile.yaml`, and the step docs. Say what changed.
 - `project_catalog.yaml`: the only source of projects and metrics.
 - `base_files/english/resume.md`: the base resume text.
 - `templates/Resume_latex.yaml`, `templates/Resume_regular.yaml`: example
-  `Resume.yaml` files for the two resume types.
+  `Resume.yaml` files for the two resume types in English; `Resume_latex_de.yaml`
+  and `Resume_regular_de.yaml` are the German versions.
+- `templates/Cover_Letter_en.yaml`, `templates/Cover_Letter_de.yaml`: cover letter
+  templates with placeholders.

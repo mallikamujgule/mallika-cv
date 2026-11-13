@@ -31,3 +31,4 @@ some changes.txt
 # Local environment and outputs
 .venv/
 dist/
+okf/fonts/

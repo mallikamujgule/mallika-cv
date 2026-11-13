@@ -176,6 +176,17 @@ def get_german_section_order(data):
 
 # ── Data extraction helpers (format-agnostic) ────────────────────────────────
 
+def _join_sentences(bullets):
+    """Join project bullets into one paragraph, ending each bullet with a full stop."""
+    parts = []
+    for b in bullets:
+        b = str(b).strip()
+        if b and b[-1] not in '.!?:;':
+            b += '.'
+        parts.append(b)
+    return " ".join(parts)
+
+
 def get_contact_info(data):
     """Extract and normalize contact info from resume data."""
     contact = data.get('contact_info', {})
@@ -302,38 +313,19 @@ def generate_latex_summary_tex(data, h):
 
 
 def generate_latex_education_tex(data, h):
-    """Generate LaTeX education section.
-
-    All entries use the same font size, determined by the longest
-    degree+university combination so everything stays on one line
-    and entries look visually consistent.
-    """
+    """Generate LaTeX education section: degree and date on one line,
+    university on the line below."""
     edu_list = data.get('education', data.get('ausbildung', []))
     if not edu_list:
         return ""
-    # Find the longest combined entry to pick a uniform font size
-    max_len = max(len(e.get('degree', '')) + len(e.get('university', '')) for e in edu_list)
-    if max_len <= 70:
-        # Standard: degree normal, university \small — use \eduEntry macro
-        edu_tex_items = []
-        for edu in edu_list:
-            degree = escape_latex(edu.get('degree', ''))
-            univ   = escape_latex(edu.get('university', ''))
-            date   = escape_latex(edu.get('date', ''))
-            edu_tex_items.append(f"\\eduEntry{{{degree}}}{{{univ}}}{{{date}}}")
-    else:
-        # Long entries: shrink all to \small/\footnotesize, wrap in \mbox
-        edu_tex_items = []
-        for edu in edu_list:
-            degree = escape_latex(edu.get('degree', ''))
-            univ   = escape_latex(edu.get('university', ''))
-            date   = escape_latex(edu.get('date', ''))
-            edu_tex_items.append(
-                f"\\mbox{{\\small\\textbf{{{degree}}}}}"
-                f"~\\mbox{{\\footnotesize\\textit{{{univ}}}}}"
-                f" \\hfill {{\\small\\textit{{{date}}}}}"
-            )
-    education_body = " \\\\\n".join(edu_tex_items)
+    # Degree (bold) with the date on the right, university (italic) on the next line.
+    edu_tex_items = []
+    for edu in edu_list:
+        degree = escape_latex(edu.get('degree', ''))
+        univ   = escape_latex(edu.get('university', ''))
+        date   = escape_latex(edu.get('date', ''))
+        edu_tex_items.append(f"\\eduEntry{{{degree}}}{{{univ}}}{{{date}}}")
+    education_body = " \\\\[3pt]\n".join(edu_tex_items)
     education_tex = (
         f"\\section{{{h['education']}}}\n"
         f"{education_body}"
@@ -399,7 +391,7 @@ def generate_latex_projects_tex(data, h, strip_trailing_dot=True, vspace='6pt'):
         proj_name  = escape_latex(proj.get('name', ''))
         repo_url   = proj.get('repo_url', proj.get('url', ''))
         bullets    = [escape_latex(b) for b in proj.get('bullets', [])]
-        summary    = _clean_prose(" ".join(bullets))
+        summary    = _clean_prose(_join_sentences(bullets))
 
         # \noindent\textbf{Name} --- \href{repo_url}{[Case Study]} --- summary.\par
         # When no repo_url: \noindent\textbf{Name} --- summary.\par
@@ -447,7 +439,7 @@ def generate_latex_experience_tex(data, h, include_project_bullets=False):
                     pb_name    = escape_latex(pb.get('name', ''))
                     pb_url     = pb.get('repo_url', pb.get('url', ''))
                     pb_bullets = [escape_latex(b) for b in pb.get('bullets', [])]
-                    pb_summary = _clean_prose(" ".join(pb_bullets))
+                    pb_summary = _clean_prose(_join_sentences(pb_bullets))
                     pb_link = f" --- \\href{{{pb_url}}}{{\\color{{darkblue}}\\small[Case Study]}}" if pb_url else ""
                     proj_lines.append(f"  \\resumeItem{{\\textbf{{{pb_name}}}{pb_link} --- {pb_summary.rstrip('.')}.}}")
                 proj_bullets_tex = "\n".join(proj_lines) + "\n"
@@ -524,12 +516,12 @@ def generate_latex_document(header_tex, body_tex):
 \\titlespacing{{\\section}}{{0pt}}{{6pt}}{{4pt}}
 
 \\newcommand{{\\resumeItem}}[1]{{\\item[$\\cdot$] \\fussy {{#1}}}}
-\\newcommand{{\\eduEntry}}[3]{{\\textbf{{#1}} {{\\small\\textit{{#2}}}} \\hfill {{\\small\\textit{{#3}}}}}}
+\\newcommand{{\\eduEntry}}[3]{{\\textbf{{#1}} \\hfill {{\\small\\textit{{#3}}}} \\\\ {{\\small\\textit{{#2}}}}}}
 \\newcommand{{\\resumeProject}}[1]{{{{\\normalsize\\textbf{{#1}}}}}}
 \\newcommand{{\\jobEntry}}[2]{{{{\\normalsize\\textbf{{#1}} \\hfill {{\\normalsize#2}}}}}}
 \\newcommand{{\\jobTitle}}[1]{{{{\\small\\textit{{#1}}}}}}
 
-\\hypersetup{{colorlinks=true,urlcolor=black,linkcolor=black}}
+\\hypersetup{{colorlinks=true,urlcolor=darkblue,linkcolor=darkblue}}
 
 \\begin{{document}}
 
@@ -680,16 +672,16 @@ def generate_reportlab_contact_header(data, name_style, contact_style):
     if loc:   line1_parts.append(loc)
     if phone: line1_parts.append(phone)
     if github:
-        line1_parts.append(f"<a href='https://{github}' color='#0000EE'>{github}</a>")
+        line1_parts.append(f"<a href='https://{github}' color='{DARKBLUE_HEX}'>{github}</a>")
     line1 = " &nbsp;&bull;&nbsp; ".join(line1_parts)
 
     email    = contact.get('email', '')
     linkedin = contact.get('linkedin', '')
     line2_parts = []
     if email:
-        line2_parts.append(f"<a href='mailto:{email}' color='#0000EE'>{email}</a>")
+        line2_parts.append(f"<a href='mailto:{email}' color='{DARKBLUE_HEX}'>{email}</a>")
     if linkedin:
-        line2_parts.append(f"<a href='https://{linkedin}' color='#0000EE'>{linkedin}</a>")
+        line2_parts.append(f"<a href='https://{linkedin}' color='{DARKBLUE_HEX}'>{linkedin}</a>")
     line2 = " &nbsp;&bull;&nbsp; ".join(line2_parts)
 
     visa  = contact.get('visa', '')
@@ -821,7 +813,7 @@ def render_projects_rl(ctx):
         name       = proj.get('name', '')
         repo_url   = proj.get('repo_url', proj.get('url', ''))
         bullets    = proj.get('bullets', [])
-        prose      = _clean_prose(" ".join(bullets))
+        prose      = _clean_prose(_join_sentences(bullets))
 
         # Build: <b>Name</b> --- <a href='repo_url'>[Case Study]</a> --- summary
         # When no repo_url: <b>Name</b> --- summary
@@ -873,7 +865,7 @@ def render_professional_experience_rl(ctx):
                 pb_name    = pb.get('name', '')
                 pb_url     = pb.get('repo_url', pb.get('url', ''))
                 pb_bullets = pb.get('bullets', [])
-                pb_prose   = _clean_prose(" ".join(pb_bullets))
+                pb_prose   = _clean_prose(_join_sentences(pb_bullets))
                 pb_github  = f" --- <a href='{pb_url}' color='{DARKBLUE_HEX}'><font size=8>[Case Study]</font></a>" if pb_url else ""
                 pb_line    = f"<b>{pb_name}</b>{pb_github} --- {pb_prose.rstrip('.')}."
                 block.append(Paragraph(f"<bullet>&bull;&nbsp;&nbsp;</bullet>{pb_line}", ctx.styles['bullet']))
@@ -888,7 +880,7 @@ def render_professional_experience_rl(ctx):
 def render_education_rl(ctx):
     """Render the education section as ReportLab flowables.
 
-    degree (bold) + university (italic only, not bold) on the left,
+    degree (bold) with the university (italic) on the line below,
     date right-aligned (same two-column layout as Professional Experience).
     """
     edu_list = get_education_list(ctx.data)
@@ -902,22 +894,8 @@ def render_education_rl(ctx):
         degree      = edu.get('degree', '')
         univ        = edu.get('university', '')
         completion  = edu.get('date', '')
-        # Keep degree + university on one line: use non-breaking spaces in
-        # university name so ReportLab never wraps mid-name. Adaptive font
-        # size for the university so long names shrink instead of wrapping.
-        univ_nbsp   = univ.replace(' ', '&nbsp;')
-        degree_len  = len(degree)
-        univ_len    = len(univ)
-        # Base university font size is 10pt; shrink for long combined lines
-        if degree_len + univ_len <= 55:
-            univ_size = 10
-        elif degree_len + univ_len <= 65:
-            univ_size = 9.5
-        elif degree_len + univ_len <= 75:
-            univ_size = 9
-        else:
-            univ_size = 8.5
-        left_para   = Paragraph(f"<b>{degree}</b> <font size={univ_size}><i>{univ_nbsp}</i></font>", ctx.styles['edu'])
+        # Degree (bold) on the first line, university (italic) below it.
+        left_para   = Paragraph(f"<b>{degree}</b><br/><i>{univ}</i>", ctx.styles['edu'])
         right_para  = Paragraph(completion, ctx.styles['date'])
         edu_table   = Table([[left_para, right_para]], colWidths=[400, 137])
         edu_table.setStyle(TableStyle([
@@ -995,7 +973,7 @@ def stamp_photo_on_pdf(pdf_path, photo_path, render_mode='latex', page_index=0):
 
     # LaTeX uses 0.4in margin all around; header is taller.
     top_margin = 0.25 * inch        # 18pt — nudged up for headshot padding
-    photo_size = 1.40 * inch        # 100.8pt — spans name to summary rule
+    photo_size = 1.15 * inch        # fits the two-line header (name + 2 contact lines) above the summary rule
 
     # Position: top-right corner, aligned with page margins
     x = page_w - margin - photo_size
@@ -1016,9 +994,10 @@ def stamp_photo_on_pdf(pdf_path, photo_path, render_mode='latex', page_index=0):
     writer = PdfWriter()
 
     for i, page in enumerate(reader.pages):
+        # pypdf 7+ requires the page to belong to the writer before merging.
+        new_page = writer.add_page(page)
         if i == page_index:
-            page.merge_page(overlay_reader.pages[0])
-        writer.add_page(page)
+            new_page.merge_page(overlay_reader.pages[0])
 
     with open(pdf_path, 'wb') as f:
         writer.write(f)

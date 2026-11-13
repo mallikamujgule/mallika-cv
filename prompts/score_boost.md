@@ -12,6 +12,8 @@ Innovation Design Management and product designer, ...". Still 2 lines, 200
 characters or fewer, no tool names.
 
 ## 2. Exact JD phrase weaving
+This now applies to every run (see `02_resume_and_visual_audit.md`); at a score under 85 push it harder.
+
 Scan `Job_Description.yaml` for distinctive phrases (for example "end-to-end
 user flows", "design system", "usability testing with B2B users"). Weave at least
 one exact phrase into a truthful bullet. The phrase must describe work she did.

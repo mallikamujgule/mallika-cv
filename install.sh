@@ -58,6 +58,9 @@ else
 fi
 echo "Installed: $("$HERE/.venv/bin/python" --version)"
 
+echo "==> Fonts (Latin Modern Roman 10 for the Regular renderer)"
+"$HERE/.venv/bin/python" "$HERE/install_fonts.py" || echo "Skipped: install MacTeX or BasicTeX, then run install_fonts.py"
+
 echo "==> Linking skill"
 mkdir -p "$SKILLS_DIR"
 if [[ -e "$LINK" && ! -L "$LINK" ]]; then

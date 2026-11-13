@@ -10,7 +10,7 @@
 # Typical run (Claude calls these in order):
 #
 #   ./run_pipeline.sh doctor                       # one-time environment check
-#   ./run_pipeline.sh fetch --url "https://..."    # backup JD fetch (Jina reader)
+#   ./run_pipeline.sh fetch --url "https://..."    # JD fetch: TinyFish if installed, else Jina reader
 #   ./run_pipeline.sh new "Company" "Role"         # create dated application folder
 #       ... Claude writes ATS_Report.yaml, Job_Description.yaml, project_info.md ...
 #   ./run_pipeline.sh stage1 --app-dir "<dir>"     # compile ATS/JD PDFs, extract projects
@@ -35,6 +35,8 @@ while [[ -L "$SOURCE" ]]; do
 done
 SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
 VENV_PYTHON="$SCRIPT_DIR/.venv/bin/python"
+# MacTeX installs pdflatex here; it is not always on the PATH of app-launched shells.
+export PATH="/Library/TeX/texbin:$HOME/.local/bin:$PATH"
 LOG_DIR="${TMPDIR:-/tmp}/mallika-cv"
 mkdir -p "$LOG_DIR"
 
@@ -104,32 +106,52 @@ cmd_doctor() {
         if "$VENV_PYTHON" -c "import $mod" 2>/dev/null; then ok "python module: $mod"; else warn "missing python module: $mod (run install.sh)"; fi
     done
     if command -v pdflatex >/dev/null 2>&1; then
-        ok "pdflatex found: LaTeX render mode available"
+        ok "pdflatex found ($(command -v pdflatex)): LaTeX render mode available"
     else
         warn "pdflatex not found: LaTeX render mode will fall back to the regular (ReportLab) renderer. Install MacTeX or BasicTeX to enable it."
     fi
+    if command -v tinyfish >/dev/null 2>&1; then ok "tinyfish CLI found: used first for job page fetches"; else log "tinyfish CLI not installed: job pages are fetched with the Jina reader"; fi
+    if [[ -f "$SCRIPT_DIR/okf/fonts/lmroman10-regular.ttf" ]]; then ok "LM Roman 10 TTF fonts found (Regular renderer)"; else warn "LM Roman 10 TTF missing: Regular renderer uses Times. Run: $VENV_PYTHON $SCRIPT_DIR/install_fonts.py"; fi
     local photo; photo="$(cfg 'config.CANDIDATE_PHOTO')"
     if [[ -n "$photo" && -f "$photo" ]]; then ok "photo: $photo"; else warn "no photo configured (LaTeX resume prints without a photo)"; fi
-    for f in okf/profile.yaml okf/project_catalog.yaml okf/project_catalog_condensed.yaml okf/base_files/english/resume.md; do
+    for f in okf/profile.yaml okf/project_catalog.yaml okf/project_catalog_condensed.yaml okf/base_files/english/resume.md okf/base_files/german/resume_de.md; do
         if [[ -f "$SCRIPT_DIR/$f" ]]; then ok "$f"; else warn "missing $f"; fi
     done
     if [[ -d "$OBSIDIAN_VAULT_DIR" ]]; then ok "Obsidian vault found: sync enabled"; else log "No Obsidian vault at $OBSIDIAN_VAULT_DIR: sync is skipped"; fi
 }
 
 ###############################################################################
-# fetch: backup JD fetch through the Jina reader (no API key needed)
+# fetch: JD fetch, TinyFish first (if installed), then the Jina reader
 ###############################################################################
 cmd_fetch() {
     [[ -n "$JD_URL" ]] || die "fetch needs --url"
     local out="${OUT_FILE:-$LOG_DIR/jd-$(date +%s).txt}"
-    log "Fetching $JD_URL via r.jina.ai"
-    local auth=()
-    [[ -n "${JINA_API_KEY:-}" ]] && auth=(-H "Authorization: Bearer $JINA_API_KEY")
-    if ! curl -fsSL --max-time 60 ${auth[@]+"${auth[@]}"} "https://r.jina.ai/$JD_URL" -o "$out"; then
-        die "Could not fetch the posting. Ask Mallika to paste the job description text."
+    local got=""
+
+    # 1. TinyFish (first choice, only if its CLI is installed and signed in)
+    if command -v tinyfish >/dev/null 2>&1; then
+        log "Fetching $JD_URL via TinyFish"
+        if tinyfish fetch content get --format markdown "$JD_URL" > "$out" 2> "$LOG_DIR/tinyfish.log" \
+            && [[ $(wc -c < "$out") -gt 400 ]]; then
+            got="tinyfish"
+        else
+            warn "TinyFish failed or returned too little text (log: $LOG_DIR/tinyfish.log). Trying Jina."
+        fi
     fi
-    [[ $(wc -c < "$out") -gt 400 ]] || die "Fetched text is too short to be a job description ($out). Ask Mallika to paste it."
-    ok "JD saved: $out ($(wc -c < "$out") bytes)"
+
+    # 2. Jina reader (no API key needed)
+    if [[ -z "$got" ]]; then
+        log "Fetching $JD_URL via r.jina.ai"
+        local auth=()
+        [[ -n "${JINA_API_KEY:-}" ]] && auth=(-H "Authorization: Bearer $JINA_API_KEY")
+        if curl -fsSL --max-time 60 ${auth[@]+"${auth[@]}"} "https://r.jina.ai/$JD_URL" -o "$out" \
+            && [[ $(wc -c < "$out") -gt 400 ]]; then
+            got="jina"
+        fi
+    fi
+
+    [[ -n "$got" ]] || die "Could not fetch the posting. Ask Mallika to paste the job description text."
+    ok "JD saved via $got: $out ($(wc -c < "$out") bytes)"
     echo "JD_FILE:$out"
 }
 
@@ -225,6 +247,11 @@ cmd_resume() {
         [[ -f "$APP_DIR/$RESUME_PDF" ]] && generate_layout_audit "$APP_DIR" "$APP_DIR/$RESUME_PDF"
         ok "Resume ready: $APP_DIR/$RESUME_PDF"
         echo "RESUME_PDF:$APP_DIR/$RESUME_PDF"
+        # Every number must trace to Mallika's sources; flag bullets without a number.
+        if ! "$VENV_PYTHON" "$SCRIPT_DIR/check_resume_facts.py" "$APP_DIR/Resume.yaml"; then
+            warn "Untraceable numbers found: fix or remove them in Resume.yaml, then re-run resume."
+            exit 3
+        fi
     else
         err "Resume step failed: $COMPILE_ERROR"
         echo "--- log (first 30 lines) ---"

@@ -16,6 +16,7 @@
 
 COMPILE_ERROR=""
 COMPILE_LOG=""
+WATERMARK_STATUS="Not run"
 
 compile_step1_pdfs() {
     local app_dir="$1"
@@ -119,8 +120,11 @@ compile_resume() {
     # Step E: Watermark check (non-critical)
     "$VENV_PYTHON" "$SCRIPT_DIR/check_watermarks.py" "Resume.yaml" "$RESUME_PDF" > $LOG_DIR/watermark.log 2>&1
     if [[ $? -ne 0 ]]; then
+        WATERMARK_STATUS="Fail"
         warn "AI watermark check returned non-zero exit — investigate before submitting"
         warn "See $LOG_DIR/watermark.log"
+    else
+        WATERMARK_STATUS="Pass"
     fi
 
     # Recompile ATS report with post-rewrite scores
@@ -198,7 +202,7 @@ eye_test_diagnostics:
     status: "$parse_status"
     feedback: "From resume_parseability.py"
   watermark_check:
-    status: "Pass"
+    status: "$WATERMARK_STATUS"
     feedback: "From check_watermarks.py"
 direct_visual_refactoring_actions: []
 optimized_v2_generated: false
