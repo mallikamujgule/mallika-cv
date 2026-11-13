@@ -1,0 +1,88 @@
+# Regular-type resume (--render reportfallback, ReportLab, no photo).
+# Mirrors the "us" style schema: experience with bullets, plus a separate
+# projects section for case studies. Facts come from Mallika_Mujgule_CV.pdf.
+type: resume
+language: "English"
+render_mode: "reportfallback"
+resume_style: "us"
+resume_variation: "Balanced"
+keyword_stuffing: false
+user_directed_skills: []
+contact_info:
+  name: "MALLIKA MUJGULE"
+  location: "Berlin, Germany"
+  phone: "+49 172 7689957"
+  email: "mallikamujgule08@gmail.com"
+  linkedin: "linkedin.com/in/mallika-mujgule-1114bb13a"
+  portfolio: "mallikamujgule.vercel.app"
+  photo: null
+summary: "Product Designer with 4+ years across fintech, B2B industrial platforms, IoT and AI-enabled products, from research to delivery with PMs and developers."
+technical_skills:
+  - category: "UX & Product"
+    skills: ["User Research", "Usability Testing", "A/B Testing", "Heuristic Evaluation", "Journey Mapping", "Information Architecture", "Interaction Design"]
+  - category: "Design Practice"
+    skills: ["Mobile App Design", "Wireframing", "Prototyping", "Design Systems", "Responsive Design", "Design Thinking", "Design Strategy"]
+  - category: "Tools"
+    skills: ["Figma", "Framer", "Zeplin", "Miro", "Notion", "Photoshop", "Blender"]
+  - category: "AI-Assisted Workflows"
+    skills: ["Claude Code", "Lovable", "Google AI Studio"]
+  - category: "Collaboration"
+    skills: ["Cross-functional Collaboration", "Stakeholder Management", "Systems Thinking", "Agile Collaboration", "Storytelling"]
+projects:
+  - name: "FYTA Plant App and Sensor Flows"
+    repo_url: "https://mallikamujgule.vercel.app/"
+    tools: ["Figma", "Claude Code", "Prototyping"]
+    bullets:
+      - "Designed 20+ screens and end-to-end flows for the FYTA mobile app"
+      - "Designed plant journal, sensor self-calibration and probe testing flows"
+      - "2-3x faster concept-to-build with AI-assisted prototyping using Claude"
+  - name: "Thermax EDGE B2B Asset Tracking Redesign"
+    repo_url: "https://mallikamujgule.vercel.app/"
+    tools: ["Figma", "Double Diamond", "Usability Testing"]
+    bullets:
+      - "Found 12+ usability issues testing with 6+ industrial users"
+      - "Redesigned 10+ screens, projecting 25% shorter journey and task time"
+      - "Single asset page projects 30% fewer status calls, 25% faster spares quotes"
+  - name: "ICICI Bank Web and Mobile Fintech Modules"
+    repo_url: "https://mallikamujgule.vercel.app/"
+    tools: ["Figma", "A/B Testing", "Benchmarking"]
+    bullets:
+      - "Redesigned fintech modules used by 3M+ users"
+      - "Improved usability by 60% across lockers, Discover and retirement journeys"
+      - "Grounded decisions in desk research, benchmarking and A/B tests"
+professional_experience:
+  - company: "FYTA"
+    location: "Berlin, Germany"
+    date: "Jan 2026 - Present"
+    title: "Werkstudent UX Designer"
+    bullets:
+      - "Designed 20+ screens and end-to-end user flows for the FYTA mobile app"
+      - "Built a sensor data analysis tool for FYTA's backend using AI-assisted development"
+  - company: "Onething Design (client: Thermax EDGE)"
+    location: "Pune, India"
+    date: "Jan 2025 - Aug 2025"
+    title: "Senior Product Designer"
+    bullets:
+      - "Led the UX audit of EDGE using the Double Diamond method, leading to a full redesign"
+      - "Drove alignment between product managers, developers and stakeholders on goals"
+  - company: "Sparklin (client: ICICI Bank)"
+    location: "Pune, India"
+    date: "Jun 2022 - Oct 2024"
+    title: "UX Designer"
+    bullets:
+      - "Managed the ICICI client relationship end to end, securing sign-off each round"
+      - "Mentored 3 design interns and interviewed 10+ UX intern candidates"
+  - company: "Shashi Prabhu and Associates"
+    location: "Pune, India"
+    date: "Feb 2021 - May 2022"
+    title: "Architect"
+    bullets:
+      - "Delivered 15+ projects on time; 3D-visualised presentations lifted client retention 20%"
+education:
+  - degree: "M.A. Innovation Design Management"
+    university: "University of Europe for Applied Sciences, Berlin"
+    date: "Sep 2025 - Feb 2027 (expected)"
+  - degree: "Bachelor of Architecture"
+    university: "Dr. Bhanuben Nanavati College of Architecture, Pune"
+    date: "04/2020"
+languages: ["English (C2)", "Hindi (C2)", "Marathi (C2)", "German (A2)", "French (A1)"]

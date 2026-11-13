@@ -1,0 +1,126 @@
+projects:
+- title: FYTA Plant App and Sensor Flows
+  description: UX design for the FYTA mobile app, an IoT plant-tech product with sensor hardware.
+  technologies: Figma, Claude Code, AI-assisted prototyping
+  archetypes:
+  - Product Design
+  - UX Design
+  - AI-Enabled Product Design
+  business_problem: Making plant care and sensor setup (journal, self-calibration, probe testing) usable inside a mobile app paired with hardware.
+  key_metrics: 20+ screens and end-to-end flows; 2-3x faster concept-to-build turnaround with AI-assisted prototyping
+  transferable_skills:
+  - user research
+  - interaction design
+  - prototyping
+  - mobile app design
+  - iot
+  - user flows
+  - ai-assisted workflows
+  - iteration
+  repo_url: https://mallikamujgule.vercel.app/
+  role: Werkstudent UX Designer, FYTA, Jan 2026 - Present, Berlin
+  keywords:
+  - ux design
+  - mobile app
+  - iot
+  - hardware
+  - sensor
+  - figma
+  - prototyping
+  - interaction design
+  - user flows
+  - ai-assisted
+  - claude
+  - user research
+- title: Thermax EDGE B2B Asset Tracking Redesign
+  description: UX audit and redesign of Thermax EDGE, a B2B industrial asset tracking platform, delivered at Onething Design.
+  technologies: Figma, Double Diamond, usability testing
+  archetypes:
+  - Product Design
+  - UX Design
+  - UX Research
+  business_problem: Industrial users faced usability issues and long task times; status calls and spares quotes were slow.
+  key_metrics: 12+ usability issues found with 6+ industrial users; 25% projected reduction in journey and task time across 10+ screens; 30% projected drop in routine status calls; 25% faster spares quotes
+  transferable_skills:
+  - ux audit
+  - usability testing
+  - double diamond
+  - b2b
+  - enterprise ux
+  - stakeholder alignment
+  - redesign
+  - information architecture
+  repo_url: https://mallikamujgule.vercel.app/
+  role: Senior Product Designer, Onething Design, Jan 2025 - Aug 2025, Pune
+  keywords:
+  - ux audit
+  - usability testing
+  - double diamond
+  - b2b
+  - industrial
+  - asset tracking
+  - redesign
+  - stakeholder
+  - product managers
+  - saas
+  - platform
+- title: ICICI Bank Web and Mobile Fintech Modules
+  description: Redesign of ICICI Bank web and mobile fintech modules at Sparklin, including online lockers, Discover and the retirement journey.
+  technologies: Figma, A/B testing, competitive benchmarking, desk research
+  archetypes:
+  - Product Design
+  - UX Design
+  - Fintech Design
+  business_problem: Streamlining high-traffic banking flows for a very large user base.
+  key_metrics: 3M+ users impacted; 60% usability improvement from streamlined flows; 3 design interns managed; 10+ intern candidates interviewed
+  transferable_skills:
+  - fintech
+  - banking ux
+  - a/b testing
+  - competitive benchmarking
+  - desk research
+  - client management
+  - team leadership
+  - mentoring
+  - web design
+  - mobile design
+  repo_url: https://mallikamujgule.vercel.app/
+  role: 'UX Designer, Sparklin (client: ICICI Bank), Jun 2022 - Oct 2024, Pune'
+  keywords:
+  - fintech
+  - banking
+  - ux design
+  - a/b testing
+  - benchmarking
+  - desk research
+  - web
+  - mobile
+  - client management
+  - mentoring
+  - user flows
+  - icici
+- title: Architecture Practice (Healthcare, Residential, Government)
+  description: Architect at Shashi Prabhu and Associates on healthcare, residential and government stadium projects; earlier an architectural intern.
+  technologies: 3D visualisation, architectural design
+  archetypes:
+  - Architecture
+  - Spatial Design
+  business_problem: Delivering architectural projects on schedule and winning client confidence through visualisation.
+  key_metrics: 15+ projects delivered on time; 20% higher client retention through 3D-visualised client presentations
+  transferable_skills:
+  - 3d visualisation
+  - client presentations
+  - project delivery
+  - spatial thinking
+  - systems thinking
+  repo_url: https://mallikamujgule.vercel.app/
+  role: Architect, Shashi Prabhu and Associates, Feb 2021 - May 2022, Pune; Architectural Intern, Jun 2019 - Nov 2019, Mumbai
+  keywords:
+  - architecture
+  - 3d visualisation
+  - healthcare
+  - residential
+  - government
+  - client presentations
+  - project delivery
+  - blender

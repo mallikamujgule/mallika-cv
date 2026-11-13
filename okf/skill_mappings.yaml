@@ -1,0 +1,67 @@
+# Skill normalization rules for obsidian_sync_core.normalize_skill().
+# First match wins. Keys: exact, prefix, contains, exclude_contains, canonical.
+
+rules:
+  # --- Design tools ---
+  - canonical: "Figma"
+    prefix: ["figma"]
+  - canonical: "Framer"
+    exact: ["framer"]
+  - canonical: "Zeplin"
+    exact: ["zeplin"]
+  - canonical: "Miro"
+    exact: ["miro"]
+  - canonical: "Notion"
+    exact: ["notion"]
+  - canonical: "Photoshop"
+    exact: ["photoshop", "adobe photoshop"]
+  - canonical: "Blender"
+    exact: ["blender"]
+  # --- AI tools ---
+  - canonical: "Claude Code"
+    exact: ["claude code", "claude", "claude ai"]
+  - canonical: "Lovable"
+    exact: ["lovable"]
+  - canonical: "Google AI Studio"
+    exact: ["google ai studio", "ai studio"]
+  - canonical: "AI-Assisted Workflows"
+    contains: ["ai-assisted", "ai assisted", "ai prototyping"]
+  # --- Research ---
+  - canonical: "User Research"
+    exact: ["user research", "ux research", "design research"]
+  - canonical: "Usability Testing"
+    contains: ["usability test"]
+  - canonical: "A/B Testing"
+    exact: ["a/b testing", "ab testing", "a/b tests"]
+  - canonical: "Heuristic Evaluation"
+    contains: ["heuristic"]
+  - canonical: "Journey Mapping"
+    contains: ["journey map"]
+  - canonical: "Information Architecture"
+    exact: ["information architecture", "ia"]
+  # --- Design practice ---
+  - canonical: "Interaction Design"
+    exact: ["interaction design", "ixd"]
+  - canonical: "Mobile App Design"
+    contains: ["mobile app design", "mobile design"]
+  - canonical: "Wireframing"
+    prefix: ["wireframe", "wireframing"]
+  - canonical: "Prototyping"
+    prefix: ["prototyp"]
+  - canonical: "Design Systems"
+    contains: ["design system"]
+  - canonical: "Responsive Design"
+    contains: ["responsive"]
+  - canonical: "Design Thinking"
+    exact: ["design thinking"]
+  - canonical: "Design Strategy"
+    exact: ["design strategy"]
+  - canonical: "Agile Collaboration"
+    contains: ["agile"]
+  # --- Soft skills ---
+  - canonical: "Stakeholder Management"
+    contains: ["stakeholder"]
+  - canonical: "Cross-functional Collaboration"
+    contains: ["cross-functional", "cross functional"]
+  - canonical: "Systems Thinking"
+    exact: ["systems thinking"]

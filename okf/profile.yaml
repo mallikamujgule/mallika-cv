@@ -1,0 +1,18 @@
+# Single source of truth for personal details. config.py reads this file;
+# renderers, scripts and step docs get your name, contact info and file names
+# from here. Edit this file instead of any code.
+
+name: "Mallika Mujgule"
+file_prefix: "MALLIKA_MUJGULE"        # used in output PDF names, e.g. MALLIKA_MUJGULE_Resume.pdf
+title: "Product Designer"
+phone: "+49 172 7689957"
+email: "mallikamujgule08@gmail.com"
+linkedin: "linkedin.com/in/mallika-mujgule-1114bb13a"
+portfolio: "mallikamujgule.vercel.app"
+location: "Berlin, Germany"
+work_authorization: ""                 # e.g. "Authorized to work in Germany"; left empty until you set it
+availability: ""                       # e.g. "Available from March 2027"
+photo: "okf/Photo.jpg"                 # relative to the skill folder; empty string disables
+signature: ""                          # e.g. "okf/signature.png"; empty falls back to the typed name
+languages: ["English (C2)", "Hindi (C2)", "Marathi (C2)", "German (A2)", "French (A1)"]
+home_cities: ["Berlin"]
