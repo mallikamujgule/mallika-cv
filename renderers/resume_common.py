@@ -324,7 +324,9 @@ def generate_latex_education_tex(data, h):
         degree = escape_latex(edu.get('degree', ''))
         univ   = escape_latex(edu.get('university', ''))
         date   = escape_latex(edu.get('date', ''))
-        edu_tex_items.append(f"\\eduEntry{{{degree}}}{{{univ}}}{{{date}}}")
+        cgpa   = escape_latex(str(edu.get('cgpa', '') or ''))
+        cgpa_tex = f"CGPA {cgpa}" if cgpa else ""
+        edu_tex_items.append(f"\\eduEntry{{{degree}}}{{{univ}}}{{{date}}}{{{cgpa_tex}}}")
     education_body = " \\\\[3pt]\n".join(edu_tex_items)
     education_tex = (
         f"\\section{{{h['education']}}}\n"
@@ -516,7 +518,7 @@ def generate_latex_document(header_tex, body_tex):
 \\titlespacing{{\\section}}{{0pt}}{{6pt}}{{4pt}}
 
 \\newcommand{{\\resumeItem}}[1]{{\\item[$\\cdot$] \\fussy {{#1}}}}
-\\newcommand{{\\eduEntry}}[3]{{\\textbf{{#1}} \\hfill {{\\small\\textit{{#3}}}} \\\\ {{\\small\\textit{{#2}}}}}}
+\\newcommand{{\\eduEntry}}[4]{{\\textbf{{#1}} \\hfill {{\\small\\textit{{#3}}}} \\\\ {{\\small\\textit{{#2}}}}\\hfill {{\\small\\textit{{#4}}}}}}
 \\newcommand{{\\resumeProject}}[1]{{{{\\normalsize\\textbf{{#1}}}}}}
 \\newcommand{{\\jobEntry}}[2]{{{{\\normalsize\\textbf{{#1}} \\hfill {{\\normalsize#2}}}}}}
 \\newcommand{{\\jobTitle}}[1]{{{{\\small\\textit{{#1}}}}}}
@@ -894,6 +896,8 @@ def render_education_rl(ctx):
         degree      = edu.get('degree', '')
         univ        = edu.get('university', '')
         completion  = edu.get('date', '')
+        if edu.get('cgpa'):
+            completion = f"{completion}<br/>CGPA {edu['cgpa']}"
         # Degree (bold) on the first line, university (italic) below it.
         left_para   = Paragraph(f"<b>{degree}</b><br/><i>{univ}</i>", ctx.styles['edu'])
         right_para  = Paragraph(completion, ctx.styles['date'])
