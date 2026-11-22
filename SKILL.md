@@ -85,7 +85,8 @@ renderer and continue.
 2. Create the folder: `./run_pipeline.sh new "<Company>" "<Role>"` (prints `APP_DIR:`).
 3. Write `ATS_Report.yaml`, `Job_Description.yaml` and `project_info.md` into it.
 4. Run `./run_pipeline.sh stage1 --app-dir "<APP_DIR>"`. It compiles the two PDFs,
-   extracts the ranked projects into `selected_projects.yaml`, and prints
+   extracts the ranked projects into `selected_projects.yaml`, adds the
+   application to the tracker CSV (Status: In progress), and prints
    `SKILL_GAPS:` and `ATS_SCORE:`.
 
 ### Between steps: two quick decisions
@@ -114,8 +115,7 @@ Read `03_cover_letter.md`, write `Cover_Letter.yaml`, then run
 
 ### Finish
 
-Run `./run_pipeline.sh finish --app-dir "<APP_DIR>"` (Obsidian sync if a vault
-exists, tracker CSV, summary). Then work through `99_completion_checklist.md`
+Run `./run_pipeline.sh finish --app-dir "<APP_DIR>"` (updates the tracker row to "Ready to apply", summary). Then work through `99_completion_checklist.md`
 and report to Mallika: folder path, ATS score before and after, any failed
 check, and anything you could not verify.
 
@@ -128,9 +128,10 @@ Re-read this file, `okf/profile.yaml`, and the step docs. Say what changed.
 | Need | Command |
 |---|---|
 | Check the setup | `./run_pipeline.sh doctor` |
-| Rebuild the tracker | `.venv/bin/python track_applications.py --rebuild` |
+| Show the tracker | `.venv/bin/python track_applications.py --list` |
+| Change a status later ("Applied" also stamps today's date) | `.venv/bin/python track_applications.py --mark "<company>" "Applied"` (statuses: In progress, Ready to apply, Applied, Interview, Offer, Rejected, No response, Withdrawn; add `--note "..."`) |
+| Rebuild the tracker from the folders (keeps Status, Applied On, Notes) | `.venv/bin/python track_applications.py --rebuild` |
 | Regenerate the condensed catalog after editing `okf/project_catalog.yaml` | `.venv/bin/python extract_projects.py --condensed --catalog okf/project_catalog.yaml --output okf/project_catalog_condensed.yaml` |
-| Record an outcome | `.venv/bin/python track_outcomes.py --help` |
 
 ## Source files Mallika maintains (`okf/`)
 

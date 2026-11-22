@@ -62,7 +62,11 @@ Education, Skills, Languages).
 - Applications: `~/Documents/Mallika Applications/YYYY/MM/DD/Company — Role/`
   (override with `LLM_CV_APPLICATIONS_DIR`).
 - Tracker CSV: `~/Documents/mallika_applications_tracker.csv` (`LLM_CV_TRACKER_CSV`).
-- Obsidian sync runs only if `~/Documents/Obsidian Vault` exists (`LLM_CV_OBSIDIAN_VAULT`).
+- The tracker is a CSV at `~/Documents/mallika_applications_tracker.csv` (opens in Excel, Numbers or Google Sheets).
+  Every run adds the application at `stage1` (Status: In progress) and updates it at `finish`
+  (Ready to apply). You keep the manual columns Status, Applied On and Notes; the pipeline never
+  overwrites a status you moved forward. Change one with
+  `.venv/bin/python track_applications.py --mark "<company>" "Applied"`.
 
 ## Known limits
 

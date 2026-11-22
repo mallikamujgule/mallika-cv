@@ -13,12 +13,12 @@
 #   ./run_pipeline.sh fetch --url "https://..."    # JD fetch: TinyFish if installed, else Jina reader
 #   ./run_pipeline.sh new "Company" "Role"         # create dated application folder
 #       ... Claude writes ATS_Report.yaml, Job_Description.yaml, project_info.md ...
-#   ./run_pipeline.sh stage1 --app-dir "<dir>"     # compile ATS/JD PDFs, extract projects
+#   ./run_pipeline.sh stage1 --app-dir "<dir>"     # compile ATS/JD PDFs, extract projects, add to tracker
 #   ./run_pipeline.sh check-duplicate --app-dir "<dir>"
 #       ... Claude writes Resume.yaml and Cover_Letter.yaml ...
 #   ./run_pipeline.sh resume --app-dir "<dir>"     # compile + audit the resume
 #   ./run_pipeline.sh cover  --app-dir "<dir>"     # compile + check the cover letter
-#   ./run_pipeline.sh finish --app-dir "<dir>"     # Obsidian sync (optional), tracker, summary
+#   ./run_pipeline.sh finish --app-dir "<dir>"     # tracker CSV (Ready to apply), summary
 #
 # Exit codes: 0 ok, 1 usage or missing input, 3 compile or audit failure
 # (Claude fixes the YAML named in the message and re-runs the same command).
@@ -54,7 +54,6 @@ die()  { err "$*"; exit 1; }
 cfg() { (cd "$SCRIPT_DIR" && "$VENV_PYTHON" -c "import config; print($1)"); }
 APPLICATIONS_DIR="$(cfg 'config.APPLICATIONS_DIR')"
 FILE_PREFIX="$(cfg 'config.CANDIDATE_FILE_PREFIX')"
-OBSIDIAN_VAULT_DIR="$(cfg 'config.OBSIDIAN_VAULT_DIR')"
 
 # Read one top-level key from a YAML file (empty if missing).
 yaml_get() {
@@ -117,7 +116,6 @@ cmd_doctor() {
     for f in okf/profile.yaml okf/project_catalog.yaml okf/project_catalog_condensed.yaml okf/base_files/english/resume.md okf/base_files/german/resume_de.md; do
         if [[ -f "$SCRIPT_DIR/$f" ]]; then ok "$f"; else warn "missing $f"; fi
     done
-    if [[ -d "$OBSIDIAN_VAULT_DIR" ]]; then ok "Obsidian vault found: sync enabled"; else log "No Obsidian vault at $OBSIDIAN_VAULT_DIR: sync is skipped"; fi
 }
 
 ###############################################################################
@@ -204,6 +202,10 @@ d = yaml.safe_load(open(sys.argv[1])) or {}
 print(d.get('ats_score_matrix', {}).get('total_score', 0))
 " "$APP_DIR/ATS_Report.yaml" 2>/dev/null || echo 0)"
 
+    # Add the application to the tracker right away (Status: In progress).
+    "$VENV_PYTHON" "$SCRIPT_DIR/track_applications.py" --append "$APP_DIR" --status "In progress" 2>&1 \
+        || warn "Tracker append failed (non-critical)."
+
     echo "APP_DIR:$APP_DIR"
     echo "SKILL_GAPS:$gaps"
     echo "ATS_SCORE:$score"
@@ -277,19 +279,9 @@ cmd_cover() {
 
 cmd_finish() {
     require_app_dir
-    if [[ -d "$OBSIDIAN_VAULT_DIR" && -f "$APP_DIR/Cover_Letter.yaml" ]]; then
-        log "Obsidian sync..."
-        set +e
-        "$VENV_PYTHON" "$SCRIPT_DIR/sync_to_obsidian.py" "$APP_DIR" 2>&1 \
-            || warn "Obsidian sync failed (non-critical)."
-        set -e
-    else
-        log "Obsidian sync skipped (no vault at $OBSIDIAN_VAULT_DIR)."
-    fi
-
     log "Applications tracker..."
     set +e
-    "$VENV_PYTHON" "$SCRIPT_DIR/track_applications.py" --append "$APP_DIR" 2>&1 \
+    "$VENV_PYTHON" "$SCRIPT_DIR/track_applications.py" --append "$APP_DIR" --status "Ready to apply" 2>&1 \
         || warn "Tracker append failed (non-critical)."
     set -e
 

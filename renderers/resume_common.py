@@ -45,8 +45,8 @@ MONTH_MAP = {
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 
-# Hardcoded dark-blue color used for name, section titles, and Case Study links
-DARKBLUE_HEX = '#1A365D'
+# Accent color (green 126D34; constant name kept as DARKBLUE_HEX) used for name, section titles, and Case Study links
+DARKBLUE_HEX = '#126D34'
 
 # Page margins (in inches) — shared between LaTeX and ReportFallback renderers
 MARGIN_INCHES = 0.4
@@ -258,7 +258,7 @@ def generate_latex_contact_header(data):
     email  = contact.get('email', '')
     linkedin = contact.get('linkedin', '')
     visa   = escape_latex(contact.get('visa', ''))
-    avail  = escape_latex(contact.get('availability', ''))
+    avail  = escape_latex(contact.get('availability', 'Available immediately'))
 
     # Contact line 1
     line1_parts = []
@@ -687,7 +687,7 @@ def generate_reportlab_contact_header(data, name_style, contact_style):
     line2 = " &nbsp;&bull;&nbsp; ".join(line2_parts)
 
     visa  = contact.get('visa', '')
-    avail = contact.get('availability', '')
+    avail = contact.get('availability', 'Available immediately')
     line3_parts = []
     if visa:  line3_parts.append(visa)
     if avail: line3_parts.append(avail)
@@ -987,8 +987,20 @@ def stamp_photo_on_pdf(pdf_path, photo_path, render_mode='latex', page_index=0):
     overlay_fd, overlay_path = tempfile.mkstemp(suffix='.pdf')
     os.close(overlay_fd)
     c = rl_canvas.Canvas(overlay_path, pagesize=RL_A4)
-    c.drawImage(photo_path, x, y, width=photo_size, height=photo_size,
-                preserveAspectRatio=True, mask='auto')
+    # Circular crop: fill the circle (cover), biased toward the top so faces stay in frame.
+    from reportlab.lib.utils import ImageReader
+    img_w, img_h = ImageReader(photo_path).getSize()
+    scale = max(photo_size / img_w, photo_size / img_h)
+    draw_w, draw_h = img_w * scale, img_h * scale
+    excess_h = draw_h - photo_size
+    draw_x = x - (draw_w - photo_size) / 2
+    draw_y = y - excess_h * 0.8
+    c.saveState()
+    clip = c.beginPath()
+    clip.circle(x + photo_size / 2, y + photo_size / 2, photo_size / 2)
+    c.clipPath(clip, stroke=0, fill=0)
+    c.drawImage(photo_path, draw_x, draw_y, width=draw_w, height=draw_h, mask='auto')
+    c.restoreState()
     c.showPage()
     c.save()
 

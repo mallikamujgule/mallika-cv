@@ -19,4 +19,4 @@ anything you could not verify; do not mark a box you did not check.
 - [ ] Projected figures are still labelled as projected
 - [ ] No em dashes, no adverbs ending in -ly, no AI filler in the summary, bullets or cover letter
 - [ ] If the LaTeX type was requested but `pdflatex` is missing, Mallika was told the Regular renderer was used
-- [ ] The application is in the tracker CSV (`TRACKER_CSV` in `config.py`)
+- [ ] The application is in the tracker CSV (`~/Documents/mallika_applications_tracker.csv`) with Status "Ready to apply" and a Date

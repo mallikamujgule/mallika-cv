@@ -26,12 +26,6 @@ APPLICATIONS_DIR = os.getenv(
     os.path.join(os.path.expanduser("~"), "Documents", "Mallika Applications")
 )
 
-# Optional Obsidian vault. Obsidian sync only runs when this folder exists.
-OBSIDIAN_VAULT_DIR = os.getenv(
-    "LLM_CV_OBSIDIAN_VAULT",
-    os.path.join(os.path.expanduser("~"), "Documents", "Obsidian Vault")
-)
-
 # Application tracker CSV.
 TRACKER_CSV = os.getenv(
     "LLM_CV_TRACKER_CSV",
