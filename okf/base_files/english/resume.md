@@ -25,6 +25,7 @@ Product Designer with 4+ years of experience across fintech, B2B industrial plat
 * Impacted 3M+ users through redesigns of ICICI Bank's web and mobile fintech modules.
 * Improved usability by 60% by streamlining user flows (online lockers, Discover, retirement journey).
 * Grounded design decisions in desk research, competitive benchmarking and A/B tests of design variants with ICICI teams.
+* Helped build the design system with the team: 40+ components (buttons, forms, tables) used by designers and developers, which sped up design, reduced inconsistencies and eased developer handoff.
 * Managed the ICICI client relationship end to end, presenting each design round and securing sign-off.
 * Managed and mentored a team of 3 design interns; supported hiring by interviewing 10+ UX intern candidates.
 
