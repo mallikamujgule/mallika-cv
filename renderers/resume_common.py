@@ -282,6 +282,7 @@ def generate_latex_contact_header(data):
     line3_parts = []
     if visa:  line3_parts.append(visa)
     if avail: line3_parts.append(avail)
+    line3_parts.append(escape_latex(contact.get('relocation', 'Open to relocate')))
     line3 = " $\\cdot$ ".join(line3_parts)
 
     contact_lines = [l for l in [line1, line2, line3] if l]
@@ -691,6 +692,7 @@ def generate_reportlab_contact_header(data, name_style, contact_style):
     line3_parts = []
     if visa:  line3_parts.append(visa)
     if avail: line3_parts.append(avail)
+    line3_parts.append(contact.get('relocation', 'Open to relocate'))
     line3 = " &nbsp;&bull;&nbsp; ".join(line3_parts)
 
     contact_lines = [l for l in [line1, line2, line3] if l]
