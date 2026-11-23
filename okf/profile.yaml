@@ -13,6 +13,6 @@ location: "Berlin, Germany"
 work_authorization: ""                 # e.g. "Authorized to work in Germany"; left empty until you set it
 availability: ""                       # e.g. "Available from March 2027"
 photo: "okf/Photo.jpg"                 # relative to the skill folder; empty string disables
-signature: ""                          # e.g. "okf/signature.png"; empty falls back to the typed name
+signature: "okf/signature.png"                          # e.g. "okf/signature.png"; empty falls back to the typed name
 languages: ["English (C2)", "Hindi (C2)", "Marathi (C2)", "German (A2)", "French (A1)"]
 home_cities: ["Berlin"]
